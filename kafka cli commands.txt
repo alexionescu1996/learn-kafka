@@ -1,0 +1,12 @@
+ssh into kafka container, ZooKeeper is used by Kafka for service coordination and metadata storage
+
+kafka-topics --bootstrap-server localhost:9092 --list
+kafka-console-producer --broker-list localhost:9092 --topic orders_topic
+kafka-console-consumer --bootstrap-server localhost:9092 --topic orders_topic --from-beginning
+kafka-topics --describe --topic test-topic --bootstrap-server localhost:9092
+kafka-configs --bootstrap-server localhost:9092 --entity-type topics --entity-name test-topic --alter --add-config retention.ms=259200000
+
+
+OOP, Collections, Exception handling, Java 8+ features, Multithreading, Immutability, Memory Management, SQL, Algorithms, Microservices.
+
+You have good understanding of Java 8, Spring Boot and multithreading principles;
