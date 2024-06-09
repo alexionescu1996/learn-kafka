@@ -24,6 +24,13 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
 
+  kafka-manager:
+    image: hlebalbau/kafka-manager:latest
+    ports:
+      - "9000:9000"
+    environment:
+      ZK_HOSTS: zookeeper:2181
+
 volumes:
   zookeeper_data:
   zookeeper_log:
