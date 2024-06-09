@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class InventoryUpdateService {
 
-    @KafkaListener(topics = "orders_topic", groupId = "inventory-group")
+    @KafkaListener(topics = "orders-topic", groupId = "inventory-group")
     public void processOrder(Order order) {
         // Logic to update inventory
         System.out.println("Received order for processing: " + order);

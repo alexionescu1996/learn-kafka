@@ -23,7 +23,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<String> createOrder(@RequestBody Order order) {
         // Here, you can set the order status and handle the order object as needed
-        kafkaTemplate.send("orders_topic", order);
+        kafkaTemplate.send("orders-topic", order);
 
         return ResponseEntity.ok("Order processed");
     }
