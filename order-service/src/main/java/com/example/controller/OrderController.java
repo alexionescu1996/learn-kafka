@@ -1,6 +1,7 @@
-package com.example.order.controller;
+package com.example.controller;
 
-import com.example.common.model.Order;
+import com.example.model.Order;
+import com.example.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -13,17 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/orders")
 public class OrderController {
 
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final OrderService orderService;
 
     @Autowired
-    public OrderController(KafkaTemplate<String, Object> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
     }
 
     @PostMapping
     public ResponseEntity<String> createOrder(@RequestBody Order order) {
-        // Here, you can set the order status and handle the order object as needed
-        kafkaTemplate.send("orders-topic", order);
+
+        orderService.process(order);
 
         return ResponseEntity.ok("Order processed");
     }
