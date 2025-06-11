@@ -1,0 +1,19 @@
+<configuration>
+
+    <!-- Root logger set to WARN to suppress DEBUG/INFO -->
+    <root level="WARN">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <!-- Console appender definition -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Optional: make Kafka logging even quieter -->
+    <logger name="org.apache.kafka" level="ERROR"/>
+    <logger name="org.springframework.kafka" level="ERROR"/>
+
+</configuration>

@@ -1,0 +1,84 @@
+version: '3.8'
+services:
+
+  # ─── ZooKeeper node 1 ───────────────────────────────────────────────────────
+  zoo1:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zoo1
+    networks:
+      zk-net:
+        aliases: [zoo1]
+    ports:
+      - "2181:2181"   # expose client port on host
+    environment:
+      ZOOKEEPER_SERVER_ID:   1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME:   2000
+      ZOOKEEPER_INIT_LIMIT:  20
+      ZOOKEEPER_SYNC_LIMIT:  5
+      ZOOKEEPER_SERVERS:     "zoo1:2888:3888;zoo2:2888:3888;zoo3:2888:3888"
+
+  # ─── ZooKeeper node 2 ───────────────────────────────────────────────────────
+  zoo2:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zoo2
+    networks:
+      zk-net:
+        aliases: [zoo2]
+    ports:
+      - "2182:2181"   # map host 2182 → container 2181 (optional)
+    environment:
+      ZOOKEEPER_SERVER_ID:   2
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME:   2000
+      ZOOKEEPER_INIT_LIMIT:  20
+      ZOOKEEPER_SYNC_LIMIT:  5
+      ZOOKEEPER_SERVERS:     "zoo1:2888:3888;zoo2:2888:3888;zoo3:2888:3888"
+
+  # ─── ZooKeeper node 3 ───────────────────────────────────────────────────────
+  zoo3:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zoo3
+    networks:
+      zk-net:
+        aliases: [zoo3]
+    ports:
+      - "2183:2181"   # map host 2183 → container 2181 (optional)
+    environment:
+      ZOOKEEPER_SERVER_ID:   3
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME:   2000
+      ZOOKEEPER_INIT_LIMIT:  20
+      ZOOKEEPER_SYNC_LIMIT:  5
+      ZOOKEEPER_SERVERS:     "zoo1:2888:3888;zoo2:2888:3888;zoo3:2888:3888"
+
+  # ─── Kafka broker ────────────────────────────────────────────────────────────
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+    networks:
+      - zk-net
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID:                         1
+      KAFKA_ZOOKEEPER_CONNECT:                zoo1:2181,zoo2:2181,zoo3:2181
+      KAFKA_ADVERTISED_LISTENERS:             PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+networks:
+  zk-net:
+    driver: bridge
+
+volumes:
+  # each ZK node needs its own data dir
+  zk1_data:
+  zk2_data:
+  zk3_data:
+  # Kafka data
+  kafka_data:

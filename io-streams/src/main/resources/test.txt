@@ -1,0 +1,10 @@
+this
+is
+a
+test
+for
+my
+input
+output
+stream
+example

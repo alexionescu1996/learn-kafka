@@ -1,0 +1,67 @@
+# create topic
+kafka-topics \
+    --create \
+    --bootstrap-server localhost:29092 \
+    --topic kinaction_helloworld \
+    --partitions 3 \
+    --replication-factor 3
+
+# list
+kafka-topics --list --bootstrap-server localhost:29092
+
+# describe
+kafka-topics --bootstrap-server localhost:29092 --describe --topic kinaction_alert_connect
+
+# write messages
+kafka-console-producer \
+    --bootstrap-server localhost:29092 \
+    --topic kinaction_helloworld
+
+# consumer
+kafka-console-consumer \
+    --bootstrap-server localhost:29092 \
+    --topic kinaction-test-sqlite-jdbc-invoices \
+    --from-beginning
+
+kafka-console-consumer \
+    --bootstrap-server localhost:29092 \
+    --topic kinaction_schematest \
+    --from-beginning
+
+
+
+vim 
+select all delete
+<Esc>
+:1,$d
+
+save and quit
+<Esc>
+:wq
+
+
+
+# 1) Start ZooKeeper in background
+bin/zookeeper-server-start.sh config/zookeeper.properties &
+
+# 2) Start Broker‑1 in background
+bin/kafka-server-start.sh config/server0.properties &
+
+# 3) (if you have more brokers)
+bin/kafka-server-start.sh config/server1.properties &
+bin/kafka-server-start.sh config/server2.properties &
+
+
+
+bin/zookeeper-server-start.sh config/zookeeper.properties &
+bin/kafka-server-start.sh config/server0.properties &
+bin/kafka-server-start.sh config/server1.properties &
+bin/kafka-server-start.sh config/server2.properties &
+
+
+
+
+# find its PID
+lsof +D /tmp/kafkainaction/kafka-logs-1 | grep java
+# or
+ps aux | grep kafka

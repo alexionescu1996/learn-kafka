@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'kafka-brokers'
+    static_configs:
+      - targets:
+          - 'broker1:5556'
+          - 'broker2:5557'
+          - 'broker3:5558'
