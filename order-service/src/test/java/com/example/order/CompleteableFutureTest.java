@@ -116,7 +116,7 @@ public class CompleteableFutureTest {
     @Test
     void test6()
             throws InterruptedException, ExecutionException {
-
+//        https://www.baeldung.com/java-completablefuture
 
     }
 
