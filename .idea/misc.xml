@@ -11,7 +11,13 @@
         <option value="$PROJECT_DIR$/learn-kafka-06/pom.xml" />
         <option value="$PROJECT_DIR$/learn-kafka-07/pom.xml" />
         <option value="$PROJECT_DIR$/learn-kafka-08/pom.xml" />
+        <option value="$PROJECT_DIR$/order-service/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/order-service/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="true" project-jdk-name="openjdk-23" project-jdk-type="JavaSDK" />
